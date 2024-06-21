@@ -8,14 +8,11 @@ routes.get('/autores', async (req, res) => {
     res.status(200).json(autores);
 });
 
-routes.post('/autores', (req, res) => {
+routes.post('/autores', async (req, res) => {
     const autor = req.body; // pegando o conteúdo da requisição (body)
-    maxId++; // incrementa o max id
-    autor['id'] = maxId; // adicionando a propriedade id com o valor máximo
+    const savedAutor = await controller.save(autor);
 
-    autores.push(autor); // adicionando a nova variável ao array de dados
-
-    res.json(autor); // enviando o cadastro para o client
+    res.json(savedAutor); // enviando o cadastro para o client
 });
 
 routes.get('/autores/:id', async (req, res) => {
@@ -25,14 +22,26 @@ routes.get('/autores/:id', async (req, res) => {
     if (encontrado.length > 0) {
         res.status(200).json(encontrado);
     } else {
-        res.status(400).json("Autor não cadastrado.");
+        res.status(204).send();
     }
 
 });
 
-routes.delete('/autores/:id', (req, res) => {
+routes.post('/autores/:id', async (req, res) => {
     const id = Number(req.params.id);
-    autores = autores.filter((item) => item.id != id);
+    const autor = req.body; 
+    let updatedAutor = await controller.update(autor, id);
+    if (updatedAutor) {
+        updatedAutor = await controller.findById(id); 
+        res.status(200).json(updatedAutor);
+    }
+
+    res.status(400);
+});
+
+routes.delete('/autores/:id', async (req, res) => {
+    const id = Number(req.params.id);
+    await controller.deleteById(id);
 
     res.status(204).send();
 });
