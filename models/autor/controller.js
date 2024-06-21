@@ -13,11 +13,25 @@ function findAll() {
 }
 
 function findById(id) {
-    // return autores.filter(item => item.id == id);
     return service.findById(id);
+}
+
+function save(autor) {
+    return service.save(autor);
+}
+
+function update(autor, id) {
+    return service.update(autor, id);
+}
+
+function deleteById(id) {
+    return service.deleteById(id);
 }
 
 export default {
     findAll,
-    findById
+    findById,
+    save,
+    update,
+    deleteById
 };
