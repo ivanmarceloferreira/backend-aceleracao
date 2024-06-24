@@ -1,7 +1,14 @@
 import service from "./service.js";
 
-function findAll() {
-    return service.findAll();
+async function findAll() {
+    const livros = await service.findAll();
+
+    // exemplo de fetch eager
+    livros.map(l => {
+        console.log('autor do livro', l.autor.nome);
+    })
+
+    return livros;
 }
 
 function findById(id) {

@@ -1,8 +1,14 @@
 import { where } from "sequelize";
 import Livro from "./livro.js";
+import Autor from "../autor/autor.js";
 
 async function findAll() {
-  return await Livro.findAll();
+  return await Livro.findAll({
+    include: {
+      model: Autor,
+      as: "autor",
+    },
+  });
 }
 
 async function findById(id) {
@@ -13,21 +19,21 @@ async function findById(id) {
 async function save(livro) {
   return await Livro.create({
     nome: livro.nome,
-    isbn: livro.isbn
+    isbn: livro.isbn,
   });
 }
 
 async function update(livro, id) {
-
   const instance = await Livro.findByPk(id);
   if (!instance) {
-    throw new Error('Livro não encontrado');
+    throw new Error("Livro não encontrado");
   }
 
   return await instance.update({
     nome: livro.nome,
-    isbn: livro.isbn
-  })
+    isbn: livro.isbn,
+    autorId: livro.autorId,
+  });
 }
 
 async function deleteById(id) {
