@@ -1,29 +1,29 @@
 import { where } from "sequelize";
-import Autor from "./autor.js";
+import Author from "./author.js";
 
 async function findAll() {
   console.log("retornando pelo service");
-  return await Autor.findAll();
+  return await Author.findAll();
 }
 
 async function findById(id) {
-  return await Autor.findAll({
+  return await Author.findAll({
     where: {
       id: id,
     },
   });
 }
 
-async function save(autor) {
-  return await Autor.create({
-    nome: autor.nome,
+async function save(author) {
+  return await Author.create({
+    name: author.name,
   });
 }
 
-async function update(autor, id) {
-  return await Autor.update(
+async function update(author, id) {
+  return await Author.update(
     {
-      nome: autor.nome,
+      nome: author.name,
     },
     {
       where: {
@@ -34,7 +34,7 @@ async function update(autor, id) {
 }
 
 async function deleteById(id) {
-  return await Autor.destroy({
+  return await Author.destroy({
     where: {
       id: id,
     },

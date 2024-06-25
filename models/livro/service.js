@@ -1,43 +1,39 @@
 import { where } from "sequelize";
-import Livro from "./livro.js";
-import Autor from "../autor/autor.js";
+import Book from "./book.js";
+import Author from "../autor/author.js";
 
 async function findAll() {
-  return await Livro.findAll({
-    include: {
-      model: Autor,
-      as: "autor",
-    },
-  });
+  return await Book.findAll({ include: Author });
 }
 
 async function findById(id) {
-  const instance = await Livro.findByPk(id);
+  const instance = await Book.findByPk(id);
   return instance;
 }
 
-async function save(livro) {
-  return await Livro.create({
-    nome: livro.nome,
-    isbn: livro.isbn,
+async function save(book) {
+  return await Book.create({
+    name: book.name,
+    isbn: book.isbn,
+    authorId: book.authorId,
   });
 }
 
-async function update(livro, id) {
-  const instance = await Livro.findByPk(id);
+async function update(book, id) {
+  const instance = await Book.findByPk(id);
   if (!instance) {
     throw new Error("Livro não encontrado");
   }
 
   return await instance.update({
-    nome: livro.nome,
-    isbn: livro.isbn,
-    autorId: livro.autorId,
+    nome: book.name,
+    isbn: book.isbn,
+    authorId: book.authorId,
   });
 }
 
 async function deleteById(id) {
-  return await Livro.destroy({
+  return await Book.destroy({
     where: {
       id: id,
     },

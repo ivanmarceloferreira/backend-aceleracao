@@ -1,26 +1,21 @@
 import service from "./service.js";
 
 async function findAll() {
-    const livros = await service.findAll();
+    const books = await service.findAll();
 
-    // exemplo de fetch eager
-    livros.map(l => {
-        console.log('autor do livro', l.autor.nome);
-    })
-
-    return livros;
+    return books;
 }
 
 function findById(id) {
     return service.findById(id);
 }
 
-function save(livro) {
-    return service.save(livro);
+function save(book) {
+    return service.save(book);
 }
 
-function update(livro, id) {
-    return service.update(livro, id);
+function update(book, id) {
+    return service.update(book, id);
 }
 
 function deleteById(id) {
