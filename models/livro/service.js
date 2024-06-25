@@ -2,13 +2,14 @@ import { QueryTypes, where } from "sequelize";
 import Book from "./book.js";
 import Author from "../autor/author.js";
 import db from "../../db.js";
+import Gender from "../genero/gender.js";
 
 async function findAll() {
   return await Book.findAll();
 }
 
 async function findById(id) {
-  const instance = await Book.findByPk(id, { include: Author });
+  const instance = await Book.findByPk(id, { include: [Author, Gender] });
   return instance;
 }
 
