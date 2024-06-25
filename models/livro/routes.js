@@ -46,4 +46,9 @@ routes.delete('/livros/:id', async (req, res) => {
     res.status(204).send();
 });
 
+routes.get('/livros/count/all', async (req, res) => {
+    const count = await controller.count();
+    res.status(200).json(count);
+});
+
 export { routes as default };

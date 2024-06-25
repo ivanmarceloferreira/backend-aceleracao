@@ -22,10 +22,15 @@ function deleteById(id) {
     return service.deleteById(id);
 }
 
+function count() {
+    return service.count();
+}
+
 export default {
     findAll,
     findById,
     save,
     update,
-    deleteById
+    deleteById,
+    count
 };
