@@ -1,13 +1,14 @@
-import { where } from "sequelize";
+import { QueryTypes, where } from "sequelize";
 import Book from "./book.js";
 import Author from "../autor/author.js";
+import db from "../../db.js";
 
 async function findAll() {
-  return await Book.findAll({ include: Author });
+  return await Book.findAll();
 }
 
 async function findById(id) {
-  const instance = await Book.findByPk(id);
+  const instance = await Book.findByPk(id, { include: Author });
   return instance;
 }
 
@@ -26,7 +27,7 @@ async function update(book, id) {
   }
 
   return await instance.update({
-    nome: book.name,
+    name: book.name,
     isbn: book.isbn,
     authorId: book.authorId,
   });
@@ -40,10 +41,15 @@ async function deleteById(id) {
   });
 }
 
+async function count() {
+  return await db.query("select now()", { type: QueryTypes.SELECT });
+}
+
 export default {
   findAll,
   findById,
   save,
   update,
   deleteById,
+  count,
 };

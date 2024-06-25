@@ -20,5 +20,6 @@ const Book = db.define("book", {
 Book.belongsTo(Author, {
   foreignKey: "authorId",
 });
+Author.hasMany(Book);
 
 export default Book;

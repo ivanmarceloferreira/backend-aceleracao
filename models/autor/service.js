@@ -1,5 +1,6 @@
 import { where } from "sequelize";
 import Author from "./author.js";
+import Book from "../livro/book.js";
 
 async function findAll() {
   console.log("retornando pelo service");
@@ -11,6 +12,7 @@ async function findById(id) {
     where: {
       id: id,
     },
+    include: Book
   });
 }
 
@@ -23,7 +25,7 @@ async function save(author) {
 async function update(author, id) {
   return await Author.update(
     {
-      nome: author.name,
+      name: author.name,
     },
     {
       where: {
